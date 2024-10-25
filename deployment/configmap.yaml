@@ -4,6 +4,6 @@ metadata:
   name: env-config
 data:
   DB_NAME: "project3-db"
-  DB_USER: "admin"
+  DB_USERNAME: "admin"
   DB_HOST: "postgresql-service"
   DB_PORT: "5432"
