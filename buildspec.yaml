@@ -6,6 +6,9 @@ env:
 phases:
   pre_build:
     commands:
+      - DOCKER_USERNAME=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:235816292640:secret:codebuild-docker-accesstoken-znhMBo --query 'SecretString' --output text | jq -r '.DOCKER_USERNAME')
+      - DOCKER_PASSWORD=$(aws secretsmanager get-secret-value --secret-id arn:aws:secretsmanager:us-east-1:235816292640:secret:codebuild-docker-accesstoken-znhMBo --query 'SecretString' --output text | jq -r '.DOCKER_PASSWORD')
+      - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
       - echo Logging into ECR
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
